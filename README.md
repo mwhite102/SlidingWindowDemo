@@ -8,6 +8,43 @@ This repository contains a C# implementation of the GetMaxSumOfSubArray function
 
 The GetMaxSumOfSubArray function employs a sliding window technique to traverse the array and track the sub-array with the highest sum. Here's a breakdown of its key steps:
 
+Code:
+
+```csharp
+public static int GetMaxSumOfSubArray(int[] arr, int subArrSize) 
+{
+    // Guard against subArrSize being larger than array length
+    if (subArrSize > arr.Length)
+    {
+        return 0;
+    }
+
+    int maxSum = 0;
+    int currentWindowSum = 0;
+    int currentWindowStart = 0;
+
+    // for loop based on the length of the array
+    for (int windowEnd = 0; windowEnd < arr.Length; windowEnd++)
+    {
+        // accumulate the sub-window values
+        currentWindowSum += arr[windowEnd];
+
+        // when the full sub-array has been accumulated
+        if (windowEnd >= subArrSize - 1)
+        {
+            // determine if current window sum is > than maxSum
+            maxSum = Math.Max(maxSum, currentWindowSum);
+            // subtract the value of the current window start value
+            currentWindowSum -= arr[currentWindowStart];
+            // increment the current window start
+            currentWindowStart += 1;
+        }
+    }
+
+    return maxSum;
+}
+```
+
 1. **Initialization:**
    - Sets a maximum sum variable `maxSum` to 0.
    - Initializes a current window sum variable `currentWindowSum` to 0.
